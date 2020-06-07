@@ -6,7 +6,7 @@ import { mkCommand } from "./commands_util";
 
 export const Google: Command = {
     cmd: "google",
-    example: mkCommand("google") + " <your> <search> <keywords>",
+    usage: mkCommand("google") + " <your> <search> <keywords>",
     help: "replies with the first result from google",
     handle: (params: string[], msg: Message) => {
         const searchUrl = "http://www.google.com/search?q=" + params.join("%20") + "&btnI";

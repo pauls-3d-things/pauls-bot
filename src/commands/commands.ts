@@ -1,12 +1,13 @@
 import { Message } from "discord.js";
 import { Uptime } from "./uptime";
-import { mkCommand, cc } from "./commands_util";
+import { mkCommand, printUsage } from "./commands_util";
 import { Google } from "./google";
+import { Ohm } from "./ohm";
 
 export interface Command {
     cmd: string;
     help: string;
-    example: string;
+    usage: string;
     handle: (params: string[], msg: Message) => void;
 }
 
@@ -15,7 +16,7 @@ interface CommandMap {
 }
 
 const commandsMap: CommandMap = {};
-const commandsList = [Google, Uptime];
+const commandsList = [Google, Uptime, Ohm];
 commandsList.forEach(cmd => commandsMap[cmd.cmd] = cmd);
 
 export const Commands = {
@@ -31,8 +32,8 @@ export const Commands = {
             var response = "";
 
             if (cmdParams.length == 1 && commandsMap[params[1]]) {
-                // print command example
-                response += "Usage:\n```bash\n" + commandsMap[params[1]].example + "\n```";
+                // print command usage
+                response += printUsage(commandsMap[params[1]]);
             } else {
                 // print list of commands
                 commandsList.forEach(cmd => {
@@ -41,9 +42,10 @@ export const Commands = {
             }
             msg.channel.send(response);
         } else if (commandsMap[cmd]) {
+            // execute command
             commandsMap[cmd].handle(cmdParams, msg);
         } else {
-            msg.channel.send("🤔I don't know  `" + cmd + "`. Try `" + cc + "help`");
+            msg.channel.send("🤔I don't know `" + cmd + "`. Try `" + mkCommand("help") + "`.");
         }
     }
 }

@@ -4,7 +4,7 @@ import { mkCommand } from "./commands_util";
 
 export const Uptime: Command = {
     cmd: "uptime",
-    example: mkCommand("uptime"),
+    usage: mkCommand("uptime"),
     help: "shows the bot's uptime",
     handle: (params: string[], msg: Message) => {
         const seconds = process.uptime();
