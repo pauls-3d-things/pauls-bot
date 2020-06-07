@@ -6,6 +6,10 @@ export function mkCommand(theCommand: string) {
     return cc + theCommand;
 };
 
+export function printHelp(cmd: Command) {
+    return "`" + mkCommand(cmd.cmd) + "` - *" + cmd.help + "*\n"
+}
+
 export function printUsage(cmd: Command) {
-    return "Usage:\n```bash\n" + cmd.usage + "\n```";
+    return printHelp(cmd) + "Usage:\n```bash\n" + cmd.usage + "\n```";
 }

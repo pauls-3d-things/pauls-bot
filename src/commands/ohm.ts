@@ -50,7 +50,9 @@ export const Ohm: Command = {
         const V = getValue("V", "V", params);
         const R = getValue("R", "", params);
 
-        if (I <= 0 && V <= 0 && R <= 0) {
+        // V = R * I
+
+        if (I > 0 && V > 0 && R > 0) {
             msg.channel.send("🤔Really?");
             return;
         }

@@ -1,8 +1,9 @@
 import { Message } from "discord.js";
 import { Uptime } from "./uptime";
-import { mkCommand, printUsage } from "./commands_util";
+import { mkCommand, printUsage, printHelp } from "./commands_util";
 import { Google } from "./google";
 import { Ohm } from "./ohm";
+import { Pwr } from "./pwr";
 
 export interface Command {
     cmd: string;
@@ -16,7 +17,7 @@ interface CommandMap {
 }
 
 const commandsMap: CommandMap = {};
-const commandsList = [Google, Uptime, Ohm];
+const commandsList = [Google, Uptime, Ohm, Pwr];
 commandsList.forEach(cmd => commandsMap[cmd.cmd] = cmd);
 
 export const Commands = {
@@ -37,7 +38,7 @@ export const Commands = {
             } else {
                 // print list of commands
                 commandsList.forEach(cmd => {
-                    response += "`" + mkCommand(cmd.cmd) + "` - *" + cmd.help + "*\n"
+                    response += printHelp(commandsMap[params[1]])
                 });
             }
             msg.channel.send(response);
