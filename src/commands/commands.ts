@@ -24,12 +24,12 @@ export const Commands = {
     handle: (params: string[], msg: Message) => {
         if (msg.author.bot) return; // Ignore all bots
 
-        const cmd = params[0].substr(1);
+        const cmdStr = params[0].substr(1);
         const cmdParams = params.slice(1);
 
-        console.log(msg.author.username, cmd, cmdParams);
+        console.log(msg.author.username, cmdStr, cmdParams);
 
-        if (cmd === "help") {
+        if (cmdStr === "help") {
             var response = "";
 
             if (cmdParams.length == 1 && commandsMap[params[1]]) {
@@ -38,15 +38,15 @@ export const Commands = {
             } else {
                 // print list of commands
                 commandsList.forEach(cmd => {
-                    response += printHelp(commandsMap[params[1]])
+                    response += printHelp(cmd)
                 });
             }
             msg.channel.send(response);
-        } else if (commandsMap[cmd]) {
+        } else if (commandsMap[cmdStr]) {
             // execute command
-            commandsMap[cmd].handle(cmdParams, msg);
+            commandsMap[cmdStr].handle(cmdParams, msg);
         } else {
-            msg.channel.send("🤔I don't know `" + cmd + "`. Try `" + mkCommand("help") + "`.");
+            msg.channel.send("🤔I don't know `" + cmdStr + "`. Try `" + mkCommand("help") + "`.");
         }
     }
 }
